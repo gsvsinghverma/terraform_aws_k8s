@@ -123,61 +123,73 @@ Step 3: verify on Jump Server
 ssh -i "your-key.pem" ubuntu@<jump-server-ip>
 
 # Test
----
+```bash
 aws sts get-caller-identity
----
+```
+
+
+```bash
 if you get this output means all are ✅
----
+```
+```bash
 json{
     "UserId": "AROA...",
     "Account": "123456789012",
     "Arn": "arn:aws:sts::123456789012:assumed-role/jump-server-role/i-..."
 }
----
+```
 
 # =======================================
 # INSTALL All Packages on JUMP SERVER 
 # =======================================
 
 # 1. System Update
+```bash
 sudo apt update && sudo apt upgrade -y
-
+```
 # 2. AWS CLI Install
+```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 sudo apt install unzip -y
 unzip awscliv2.zip
 sudo ./aws/install
 aws --version
-
+```
 # 3. Terraform Install
+```bash
 sudo apt install -y gnupg software-properties-common
 wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install terraform -y
 terraform --version
-
+```
 # 4. kubectl Install
+```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 kubectl version --client
-
+```
 # 5. Helm Install
+```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 helm version
-
+```
 # 6. Docker Install
+```bash
 sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu
 newgrp docker
-
+```
 # 7. Git Install
+```bash
 sudo apt install git -y
-
+```
 # 8. eksctl Install
+```bash
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
----
+```
 
 ## 📁 Project Structure
 ---
