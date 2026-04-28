@@ -195,8 +195,6 @@ eksctl version
 ## 📁 Project Structure
 ---
 
-```bash
-
 ### 2️⃣ PHASE : Jump Server Setup
 
 ```bash
