@@ -88,7 +88,7 @@ AWS Console → EC2 → Launch Instance
 
 
 Create IAM Role For Jump Server and Attach
-
+```bash
 Step 1: create IAM Role
 AWS Console → IAM → Roles → Create Role
 
@@ -121,6 +121,7 @@ Step 3: verify on Jump Server
 
 # SSH  jump server
 ssh -i "your-key.pem" ubuntu@<jump-server-ip>
+```
 
 # Test
 ```bash
@@ -197,12 +198,12 @@ eksctl version
 PHASE 2: Terraform Project Structure
 ==========================================
 Create folder structure on Jump Server:
-
+```bash
 mkdir -p ~/infrastructure
 cd ~/infrastructure
-
+```
 # Folder structure
-
+```bash
 mkdir -p {vpc,eks,rds,s3,ecr,security-groups,iam,secrets-manager,cloudwatch,jump-server}
 touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
 ```
