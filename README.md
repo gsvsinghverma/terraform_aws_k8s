@@ -69,9 +69,11 @@ availability_zones = ["ap-south-1a", "ap-south-1b"]
 db_password        = "YourStrongPassword123!"           
 ---
 
+```bash
+### 1️⃣ PHASE : Jump Server Setup
+```
 
-PHASE 1: Jump Server Setup
-
+---
 
 Step 1: Login on AWS Console and create ec2 Jump Server
 
@@ -194,10 +196,15 @@ eksctl version
 
 ## 📁 Project Structure
 ---
-==========================================
-PHASE 2: Terraform Project Structure
-==========================================
+
+```bash
+
+### 2️⃣ PHASE : Jump Server Setup
+
+```bash
 Create folder structure on Jump Server:
+```
+
 ```bash
 mkdir -p ~/infrastructure
 cd ~/infrastructure
