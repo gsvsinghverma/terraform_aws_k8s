@@ -123,7 +123,9 @@ Step 3: verify on Jump Server
 ssh -i "your-key.pem" ubuntu@<jump-server-ip>
 
 # Test
+---
 aws sts get-caller-identity
+---
 if you get this output means all are ✅
 ---
 json{
