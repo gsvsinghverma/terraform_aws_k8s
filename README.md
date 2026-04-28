@@ -58,9 +58,139 @@ Mumbai Region (ap-south-1)
 | ArgoCD         | GitOps Deployment          |
 
 ---
+Note :- please change the details in terraform.tfvars according to your project_name
+
+###########################################################
+# aws_region         = "ap-south-1"                       #
+# project_name       = "myapp"                            #
+# environment        = "production"                       #
+# vpc_cidr           = "10.0.0.0/16"                      #  
+# availability_zones = ["ap-south-1a", "ap-south-1b"]     #
+# db_password        = "YourStrongPassword123!"           #
+########################################################### 
+
+
+PHASE 1: Jump Server Setup
+
+
+Step 1: Login on AWS Console and create ec2 Jump Server
+
+AWS Console → EC2 → Launch Instance
+
+==========================================
+- Name: jump-server                      =
+- AMI: Ubuntu 22.04 LTS                  =
+- Instance Type: t3.medium               =
+- Region: ap-south-1 (Mumbai)            =
+- Security Group: port 22                =
+- Key Pair: new → download               =
+==========================================
+
+
+Create IAM Role For Jump Server and Attach
+
+Step 1: create IAM Role
+AWS Console → IAM → Roles → Create Role
+
+Step 1: Trusted Entity
+→ "AWS Service" select karo
+→ "EC2" select karo
+→ Next
+
+Step 2: Permissions add
+→ Search: "AdministratorAccess"
+→ Checkbox  ✅
+→ Next
+
+Step 3: Role name
+→ Role name: jump-server-role
+→ Create Role ✅
+
+Step 2: Attach Role On Jump Server
+
+
+AWS Console → EC2 → Instances
+→ Select Jump Server
+→ Actions (on right top)
+→ Security
+→ Modify IAM Role
+→ Dropdown  "jump-server-role" select
+→ Update IAM Role ✅
+
+Step 3: verify on Jump Server
+
+# SSH  jump server
+ssh -i "your-key.pem" ubuntu@<jump-server-ip>
+
+# Test
+aws sts get-caller-identity
+if you get this output means all are ✅
+=================================================================================
+json{
+    "UserId": "AROA...",
+    "Account": "123456789012",
+    "Arn": "arn:aws:sts::123456789012:assumed-role/jump-server-role/i-..."
+}
+==================================================================================
+
+# =======================================
+# INSTALL All Packages on JUMP SERVER 
+# =======================================
+
+# 1. System Update
+sudo apt update && sudo apt upgrade -y
+
+# 2. AWS CLI Install
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip -y
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+
+# 3. Terraform Install
+sudo apt install -y gnupg software-properties-common
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform -y
+terraform --version
+
+# 4. kubectl Install
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+
+# 5. Helm Install
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm version
+
+# 6. Docker Install
+sudo apt install docker.io -y
+sudo usermod -aG docker ubuntu
+newgrp docker
+
+# 7. Git Install
+sudo apt install git -y
+
+# 8. eksctl Install
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+---
 
 ## 📁 Project Structure
+---
+==========================================
+PHASE 2: Terraform Project Structure
+==========================================
+Create folder structure on Jump Server:
 
+mkdir -p ~/infrastructure
+cd ~/infrastructure
+
+# Folder structure
+
+mkdir -p {vpc,eks,rds,s3,ecr,security-groups,iam,secrets-manager,cloudwatch,jump-server}
+touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
 ```
 ~/infrastructure/
 ├── providers.tf
