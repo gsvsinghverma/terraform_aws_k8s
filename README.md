@@ -314,7 +314,7 @@ docker tag myapp-app:latest \
 ```bash
 docker push <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
 ```
-### 7⃣  PHASE : Jenkins + ArgoCD Setup
+ ### 7️⃣  PHASE : Jenkins + ArgoCD Setup
 
 
 Jenkins Install (EKS)
@@ -357,45 +357,75 @@ kubectl patch svc argocd-server -n argocd \
 kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d
 ```
+
+# Complete Flow Summary
+
+Developer pushes code
+        ↓
+Jenkins Pipeline trigger hota hai
+        ↓
+Docker image build hoti hai
+        ↓
+ECR par push hoti hai
+        ↓
+K8s manifest update hota hai
+        ↓
+ArgoCD detect karta hai change
+        ↓
+EKS par automatically deploy
+        ↓
+App run karta hai
+        ↓
+RDS PostgreSQL se connect
+        ↓
+Secrets Manager se credentials
+        ↓
+CloudWatch monitoring
   
-### 2️⃣ Initialize Terraform
+### 🔄 Terraform
 
 ```bash
-terraform init
+terraform init      # Initialize
+terraform plan      # Preview
+terraform apply     # Deploy
+terraform destroy   # Destroy
 ```
 
 ---
 
-### 3️⃣ Plan Infrastructure
+### 🔄 Kubectl
 
 ```bash
-terraform plan
-```
-
----
-
-### 4️⃣ Deploy Infrastructure
-
-```bash
-terraform apply
-```
-
----
-
-### 5️⃣ Generate Environment File
-
-```bash
-chmod +x generate-env.sh
-./generate-env.sh
-```
-
----
-
-### 6️⃣ Connect to EKS
-
-```bash
-aws eks update-kubeconfig --region ap-south-1 --name gsv-eks-cluster
 kubectl get nodes
+kubectl get pods -A
+kubectl get svc -A
+kubectl logs <pod-name> -n <namespace>
+```
+
+---
+
+### 🔄 EKS update kubeconfig
+
+```bash
+aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
+```
+
+---
+
+### 🔄 ECR login
+
+```bash
+aws ecr get-login-password --region ap-south-1 | \
+  docker login --username AWS --password-stdin \
+  <account-id>.dkr.ecr.ap-south-1.amazonaws.com
+```
+
+---
+
+### 🔄 Connect to EKS
+
+```bash
+aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
 ```
 
 ---
