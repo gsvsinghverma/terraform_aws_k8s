@@ -192,9 +192,6 @@ sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 ```
 
-## 📁 Project Structure
----
-
 ### 2️⃣ PHASE : Jump Server Setup
 
 
@@ -210,7 +207,8 @@ cd ~/infrastructure
 mkdir -p {vpc,eks,rds,s3,ecr,security-groups,iam,secrets-manager,cloudwatch,jump-server}
 touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
 ```
-
+## 📁 Project Structure
+---
 ```bash
 ~/infrastructure/
 ├── providers.tf
