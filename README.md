@@ -142,9 +142,9 @@ json{
 }
 ```
 
-# =======================================
-# INSTALL All Packages on JUMP SERVER 
-# =======================================
+
+INSTALL All Packages on JUMP SERVER 
+
 
 # 1. System Update
 ```bash
