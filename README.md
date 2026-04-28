@@ -424,37 +424,22 @@ Application deployment is handled via **Helm + ArgoCD**.
 ```
 Code Push → GitHub Actions → Docker Build → ECR  → ArgoCD detects change → Deploy to EKS
 ```
-## 🚀 CI/CD Flow (GitOps with EKS)
+## 🚀 CI/CD Flow
 
-![Step](https://img.shields.io/badge/Step-1-blue) Developer pushes code to GitHub  
-⬇️  
-![Step](https://img.shields.io/badge/Step-2-blue) Jenkins Pipeline triggers (CI starts)  
-⬇️  
-![Step](https://img.shields.io/badge/Step-3-blue) Application build (JAR/WAR)  
-⬇️  
-![Step](https://img.shields.io/badge/Step-4-blue) Docker image build  
-⬇️  
-![Step](https://img.shields.io/badge/Step-5-blue) Docker image pushed to AWS ECR  
-⬇️  
-![Step](https://img.shields.io/badge/Step-6-blue) Jenkins updates Kubernetes manifest (deployment.yaml)  
-⬇️  
-![Step](https://img.shields.io/badge/Step-7-blue) Updated manifest pushed to Git (GitOps repo)  
-⬇️  
-![Step](https://img.shields.io/badge/Step-8-blue) ArgoCD monitors Git repository  
-⬇️  
-![Step](https://img.shields.io/badge/Step-9-blue) ArgoCD detects changes and syncs  
-⬇️  
-![Step](https://img.shields.io/badge/Step-10-blue) Deployment updated on AWS EKS  
-⬇️  
-![Step](https://img.shields.io/badge/Step-11-blue) Pods start with new image  
-⬇️  
-![Step](https://img.shields.io/badge/Step-12-blue) Application runs  
-⬇️  
-![Step](https://img.shields.io/badge/Step-13-blue) App fetches credentials from AWS Secrets Manager  
-⬇️  
-![Step](https://img.shields.io/badge/Step-14-blue) Connects to RDS PostgreSQL  
-⬇️  
-![Step](https://img.shields.io/badge/Step-15-blue) Logs & metrics sent to CloudWatch
+1. Developer pushes code to GitHub  
+2. Jenkins pipeline triggers  
+3. Application build (JAR/WAR)  
+4. Docker image build  
+5. Push image to AWS ECR  
+6. Update Kubernetes manifest  
+7. Push changes to Git  
+8. ArgoCD detects changes  
+9. Deploy to AWS EKS  
+10. Pods start  
+11. Application runs  
+12. Fetch secrets from AWS Secrets Manager  
+13. Connect to RDS PostgreSQL  
+14. Monitoring via CloudWatch
 ---
 ## 🔐 Security Best Practices
 
