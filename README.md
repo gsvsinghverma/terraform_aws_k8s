@@ -262,51 +262,66 @@ touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
 cd ~/infrastructure
 ```
 # 1. Initialize
+```bash
 terraform init
-
+```
 # 2. Validate
+```bash
 terraform validate
-
+```
 # 3. Plan
+```bash
 terraform plan -out=tfplan
-
+```
 # 4. Apply (take 15-20 min)
+```bash
 terraform apply tfplan
-
+```
 # see Output
+```bash
 terraform output
-
+```
 ### 5️⃣ PHASE : EKS Connect by Jump Server
-# Kubeconfig update
-aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
 
+# Kubeconfig update
+```bash
+aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
+```
 # Test
+```bash
 kubectl get nodes
 kubectl get pods -A
+```
+### 6️⃣  PHASE : Docker Image Build & ECR Push
 
-### 6⃣ PHASE 6: Docker Image Build & ECR Push
+
 # ECR login
+```bash
 aws ecr get-login-password --region ap-south-1 | \
   docker login --username AWS \
   --password-stdin <account-id>.dkr.ecr.ap-south-1.amazonaws.com
-
+```
 # Image build
+```bash
 docker build -t myapp-app .
-
+```
 # Tag
+```bash
 docker tag myapp-app:latest \
   <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
-
+```
 # Push
+```bash
 docker push <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
-
-### 7⃣ PHASE 7: Jenkins + ArgoCD Setup
+```
+### 7⃣  PHASE : Jenkins + ArgoCD Setup
 
 
 Jenkins Install (EKS)
 # Jenkins namespace
+```bash
 kubectl create namespace jenkins
-
+```
 # Using Helm to Jenkins install
 helm repo add jenkins https://charts.jenkins.io
 helm repo update
