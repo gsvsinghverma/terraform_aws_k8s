@@ -60,14 +60,14 @@ Mumbai Region (ap-south-1)
 ---
 Note :- please change the details in terraform.tfvars according to your project_name
 
-###########################################################
-# aws_region         = "ap-south-1"                       #
-# project_name       = "myapp"                            #
-# environment        = "production"                       #
-# vpc_cidr           = "10.0.0.0/16"                      #  
-# availability_zones = ["ap-south-1a", "ap-south-1b"]     #
-# db_password        = "YourStrongPassword123!"           #
-########################################################### 
+
+# aws_region         = "ap-south-1"                       
+# project_name       = "myapp"                            
+# environment        = "production"                       
+# vpc_cidr           = "10.0.0.0/16"                      
+# availability_zones = ["ap-south-1a", "ap-south-1b"]     
+# db_password        = "YourStrongPassword123!"           
+
 
 
 PHASE 1: Jump Server Setup
@@ -77,14 +77,14 @@ Step 1: Login on AWS Console and create ec2 Jump Server
 
 AWS Console → EC2 → Launch Instance
 
-==========================================
-- Name: jump-server                      =
-- AMI: Ubuntu 22.04 LTS                  =
-- Instance Type: t3.medium               =
-- Region: ap-south-1 (Mumbai)            =
-- Security Group: port 22                =
-- Key Pair: new → download               =
-==========================================
+
+- Name: jump-server                     
+- AMI: Ubuntu 22.04 LTS                
+- Instance Type: t3.medium              
+- Region: ap-south-1 (Mumbai)          
+- Security Group: port 22            
+- Key Pair: new → download           
+
 
 
 Create IAM Role For Jump Server and Attach
@@ -125,13 +125,13 @@ ssh -i "your-key.pem" ubuntu@<jump-server-ip>
 # Test
 aws sts get-caller-identity
 if you get this output means all are ✅
-=================================================================================
+---
 json{
     "UserId": "AROA...",
     "Account": "123456789012",
     "Arn": "arn:aws:sts::123456789012:assumed-role/jump-server-role/i-..."
 }
-==================================================================================
+---
 
 # =======================================
 # INSTALL All Packages on JUMP SERVER 
