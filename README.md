@@ -207,6 +207,8 @@ cd ~/infrastructure
 mkdir -p {vpc,eks,rds,s3,ecr,security-groups,iam,secrets-manager,cloudwatch,jump-server}
 touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
 ```
+
+```bash
 ~/infrastructure/
 ├── providers.tf
 ├── main.tf
@@ -250,8 +252,6 @@ touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
     ├── variables.tf
     └── outputs.tf
 ```
-
----
 
 ## 🔐 Security Best Practices
 
