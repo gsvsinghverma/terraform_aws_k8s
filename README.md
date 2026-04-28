@@ -123,8 +123,8 @@ Mumbai Region (ap-south-1)
 ### 1️⃣ Clone Repo
 
 ```bash
-git clone https://github.com/your-username/demo_project_aws_k8s_argocd_helmchart.git
-cd demo_project_aws_k8s_argocd_helmchart
+git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
+cd terraform_aws_k8s
 ```
 
 ---
