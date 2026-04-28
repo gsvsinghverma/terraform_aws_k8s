@@ -323,33 +323,40 @@ Jenkins Install (EKS)
 kubectl create namespace jenkins
 ```
 # Using Helm to Jenkins install
+```bash
 helm repo add jenkins https://charts.jenkins.io
 helm repo update
 
 helm install jenkins jenkins/jenkins \
   --namespace jenkins \
   --set controller.serviceType=LoadBalancer
-
+```
 # Password
+```bash
 kubectl exec --namespace jenkins -it svc/jenkins \
   -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password
-  
+  ```
 ArgoCD Install
-# ArgoCD namespace
-kubectl create namespace argocd
 
+# ArgoCD namespace
+```bash
+kubectl create namespace argocd
+```
 # Install
+```bash
 kubectl apply -n argocd \
   -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+```
 # Service expose
+```bash
 kubectl patch svc argocd-server -n argocd \
   -p '{"spec": {"type": "LoadBalancer"}}'
-
+```
 # Password
+```bash
 kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d
-
+```
   
 ### 2️⃣ Initialize Terraform
 
