@@ -197,9 +197,9 @@ eksctl version
 
 ### 2️⃣ PHASE : Jump Server Setup
 
-```bash
+
 Create folder structure on Jump Server:
-```
+
 
 ```bash
 mkdir -p ~/infrastructure
@@ -256,27 +256,86 @@ touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
     └── outputs.tf
 ```
 
-## 🔐 Security Best Practices
-
-* ✅ **No hardcoded AWS keys**
-* ✅ Uses **IAM Roles & IRSA**
-* ✅ Sensitive files excluded via `.gitignore`
-* ✅ Private subnets for EKS & RDS
-* ✅ Security Groups properly scoped
-
 ---
-
-## 🚀 Setup Instructions
-
-### 1️⃣ Clone Repo
-
+### 4️⃣   PHASE : Terraform Run Commands
 ```bash
-git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
-cd terraform_aws_k8s
+cd ~/infrastructure
 ```
+# 1. Initialize
+terraform init
 
----
+# 2. Validate
+terraform validate
 
+# 3. Plan
+terraform plan -out=tfplan
+
+# 4. Apply (take 15-20 min)
+terraform apply tfplan
+
+# see Output
+terraform output
+
+### 5️⃣ PHASE : EKS Connect by Jump Server
+# Kubeconfig update
+aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
+
+# Test
+kubectl get nodes
+kubectl get pods -A
+
+### 6⃣ PHASE 6: Docker Image Build & ECR Push
+# ECR login
+aws ecr get-login-password --region ap-south-1 | \
+  docker login --username AWS \
+  --password-stdin <account-id>.dkr.ecr.ap-south-1.amazonaws.com
+
+# Image build
+docker build -t myapp-app .
+
+# Tag
+docker tag myapp-app:latest \
+  <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
+
+# Push
+docker push <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
+
+### 7⃣ PHASE 7: Jenkins + ArgoCD Setup
+
+
+Jenkins Install (EKS)
+# Jenkins namespace
+kubectl create namespace jenkins
+
+# Using Helm to Jenkins install
+helm repo add jenkins https://charts.jenkins.io
+helm repo update
+
+helm install jenkins jenkins/jenkins \
+  --namespace jenkins \
+  --set controller.serviceType=LoadBalancer
+
+# Password
+kubectl exec --namespace jenkins -it svc/jenkins \
+  -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password
+  
+ArgoCD Install
+# ArgoCD namespace
+kubectl create namespace argocd
+
+# Install
+kubectl apply -n argocd \
+  -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# Service expose
+kubectl patch svc argocd-server -n argocd \
+  -p '{"spec": {"type": "LoadBalancer"}}'
+
+# Password
+kubectl -n argocd get secret argocd-initial-admin-secret \
+  -o jsonpath="{.data.password}" | base64 -d
+
+  
 ### 2️⃣ Initialize Terraform
 
 ```bash
@@ -340,7 +399,15 @@ Code Push → GitHub Actions → Docker Build → ECR
 ```
 
 ---
+## 🔐 Security Best Practices
 
+* ✅ **No hardcoded AWS keys**
+* ✅ Uses **IAM Roles & IRSA**
+* ✅ Sensitive files excluded via `.gitignore`
+* ✅ Private subnets for EKS & RDS
+* ✅ Security Groups properly scoped
+
+---
 ## 🌐 Features
 
 * ✅ Multi-AZ Highly Available VPC
