@@ -60,14 +60,14 @@ Mumbai Region (ap-south-1)
 ---
 Note :- please change the details in terraform.tfvars according to your project_name
 
----
+
 aws_region         = "ap-south-1"                       
 project_name       = "myapp"                            
 environment        = "production"                       
 vpc_cidr           = "10.0.0.0/16"                      
 availability_zones = ["ap-south-1a", "ap-south-1b"]     
 db_password        = "YourStrongPassword123!"           
----
+
 
 
 ### 1️⃣ PHASE : Jump Server Setup
@@ -130,10 +130,8 @@ ssh -i "your-key.pem" ubuntu@<jump-server-ip>
 aws sts get-caller-identity
 ```
 
-
-```bash
 if you get this output means all are ✅
-```
+
 ```bash
 json{
     "UserId": "AROA...",
