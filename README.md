@@ -356,29 +356,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d
 ```
 
-# Complete Flow Summary
 
-Developer pushes code
-        ↓
-Jenkins Pipeline trigger hota hai
-        ↓
-Docker image build hoti hai
-        ↓
-ECR par push hoti hai
-        ↓
-K8s manifest update hota hai
-        ↓
-ArgoCD detect karta hai change
-        ↓
-EKS par automatically deploy
-        ↓
-App run karta hai
-        ↓
-RDS PostgreSQL se connect
-        ↓
-Secrets Manager se credentials
-        ↓
-CloudWatch monitoring
   
 ### 🔄 Terraform
 
@@ -444,9 +422,38 @@ Application deployment is handled via **Helm + ArgoCD**.
 ## 🔄 CI/CD Flow
 
 ```
-Code Push → GitHub Actions → Docker Build → ECR
-         → ArgoCD detects change → Deploy to EKS
+Code Push → GitHub Actions → Docker Build → ECR  → ArgoCD detects change → Deploy to EKS
 ```
+
+### ![Step](https://img.shields.io/badge/Step-1-blue) Developer pushes code to GitHub  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-2-blue) Jenkins Pipeline triggers (CI starts)  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-3-blue) Application build (JAR/WAR)  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-4-blue) Docker image build  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-5-blue) Docker image pushed to AWS ECR  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-6-blue) Jenkins updates Kubernetes manifest (deployment.yaml)  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-7-blue) Updated manifest pushed to Git (GitOps repo)  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-8-blue) ArgoCD monitors Git repository  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-9-blue) ArgoCD detects changes and syncs  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-10-blue) Deployment updated on AWS EKS  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-11-blue) Pods start with new image  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-12-blue) Application runs  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-13-blue) App fetches credentials from AWS Secrets Manager  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-14-blue) Connects to RDS PostgreSQL  
+⬇️  
+### ![Step](https://img.shields.io/badge/Step-15-blue) Logs & metrics sent to CloudWatch
 
 ---
 ## 🔐 Security Best Practices
