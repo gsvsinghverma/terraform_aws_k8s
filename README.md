@@ -434,7 +434,7 @@ Code Push → GitHub Actions → Docker Build → ECR  → ArgoCD detects change
 
 ## 🔄 Terraform Delete Command
 
-```
+
 Infrastructure Deletion Guide (Destroy Setup)
 
 Correct Deletion Order
