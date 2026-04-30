@@ -253,6 +253,13 @@ touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
     ├── variables.tf
     └── outputs.tf
 ```
+### 3️⃣  PHASE : Clone Run Commands
+```bash
+git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
+cd terraform_aws_k8s
+cd infrastructure
+```
+
 
 ---
 ### 4️⃣   PHASE : Terraform Run Commands
