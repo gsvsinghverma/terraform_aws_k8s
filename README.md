@@ -469,15 +469,17 @@ aws rds modify-db-instance \
 2. Empty S3 Bucket (Required)
 
 Terraform cannot delete a non-empty S3 bucket.
-
+```bash
 aws s3 rm s3://your-bucket-name --recursive
+```
 3. (Optional) Delete Jump Server Manually
 
 
 
 Step 3: Terraform Destroy (Delete All Resources)
+```bash
 cd ~/infrastructure
-
+```
 # Check what will be deleted
 ```bash
 terraform plan -destroy
