@@ -431,6 +431,102 @@ Application deployment is handled via **Helm + ArgoCD**.
 ```
 Code Push → GitHub Actions → Docker Build → ECR  → ArgoCD detects change → Deploy to EKS
 ```
+
+## 🔄 Terraform Delete Command
+
+```
+Infrastructure Deletion Guide (Destroy Setup)
+
+Correct Deletion Order
+
+Step 1: Delete ArgoCD (First)
+
+```bash
+kubectl delete -n argocd \
+  -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+kubectl delete namespace argocd
+```
+Step 2: Delete Jenkins
+
+```bash
+helm uninstall jenkins --namespace jenkins
+kubectl delete namespace jenkins
+```
+
+⚠️ Pre-Requisites Before Running terraform destroy
+1. Disable RDS Deletion Protection (Required)
+
+If deletion_protection = true, Terraform destroy will fail.
+
+Disable it first:
+```bash
+aws rds modify-db-instance \
+  --db-instance-identifier myapp-postgres \
+  --no-deletion-protection \
+  --apply-immediately
+  ```
+2. Empty S3 Bucket (Required)
+
+Terraform cannot delete a non-empty S3 bucket.
+
+aws s3 rm s3://your-bucket-name --recursive
+3. (Optional) Delete Jump Server Manually
+
+
+
+Step 3: Terraform Destroy (Delete All Resources)
+cd ~/infrastructure
+
+# Check what will be deleted
+```bash
+terraform plan -destroy
+```
+# Destroy infrastructure
+```bash
+terraform destroy
+```
+After running terraform destroy, Terraform will ask for confirmation:
+
+```bash
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure.
+  There is no undoing this. Only 'yes' will be accepted.
+
+Enter a value: yes
+
+Type yes to proceed.
+```
+
+Terraform Deletion Order (Automatic)
+
+Terraform deletes resources in dependency order:
+
+EKS Nodes        → deleted first
+EKS Cluster      → deleted
+RDS              → deleted
+Secrets Manager  → deleted
+ECR              → deleted
+S3               → deleted
+Security Groups  → deleted
+NAT Gateway      → deleted
+VPC              → deleted last
+
+If your Jump Server is not managed by Terraform, delete it manually:
+
+```bash
+Go to AWS Console → EC2 → Instances
+Select Jump Server
+Click Instance State → Terminate Instance
+Confirm ✅
+Now Run Terraform Destroy
+cd ~/infrastructure
+```
+```bash
+terraform destroy
+```
+```
+
 ## 🚀 CI/CD Flow
 
 1. Developer pushes code to GitHub  
