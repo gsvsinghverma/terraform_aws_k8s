@@ -120,8 +120,8 @@ Step 2: Permissions add
 → Checkbox  ✅
 → Next
 
-> ⚠️ **Security Note:** `AdministratorAccess` sirf learning/testing 
-> ke liye theek hai. Production mein inhe use karo:
+> ⚠️ **Security Note:** `AdministratorAccess` for learning/testing it is ok but 
+> For Production use:
 > - `AmazonEKSClusterPolicy`
 > - `AmazonEC2ContainerRegistryFullAccess`  
 > - `AmazonRDSFullAccess`
