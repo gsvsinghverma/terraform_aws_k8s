@@ -640,9 +640,9 @@ After deployment:
 ---
 
 ## 🛠️ Troubleshooting
-
-| Problem | Solution |
-|---------|----------|
+|---------------------------------------------------------------------------------------|
+| Problem                | Solution                                                     |
+|------------------------|--------------------------------------------------------------|
 | `terraform init` fails | Check AWS credentials: `aws sts get-caller-identity`         |
 | EKS nodes not joining  | Check Security Group rules for port 443                      |
 | RDS connection refused | Check Private Subnet routing & SG rules                      |
