@@ -95,8 +95,8 @@ Step 1: create IAM Role
 AWS Console → IAM → Roles → Create Role
 
 Step 1: Trusted Entity
-→ "AWS Service" select karo
-→ "EC2" select karo
+→ "AWS Service" select
+→ "EC2" select
 → Next
 
 Step 2: Permissions add
@@ -130,7 +130,7 @@ ssh -i "your-key.pem" ubuntu@<jump-server-ip>
 aws sts get-caller-identity
 ```
 
-if you get this output means all are ✅
+if you get this output means all are ok ✅
 
 ```bash
 json{
