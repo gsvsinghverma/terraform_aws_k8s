@@ -331,6 +331,14 @@ docker tag myapp-app:latest \
 ```bash
 docker push <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
 ```
+
+> 💡 **CI/CD Role clarity:**
+> - **GitHub Actions** = The code is automatically triggered when pushed.,
+>   Builds Docker image, pushes to ECR
+> - **Jenkins** = Optional alternative — works the same instead of GitHub Actions
+> - **ArgoCD** = Deploys to EKS (GitOps)
+
+
 ### 6️⃣  PHASE : Jenkins + ArgoCD Setup
 
 
@@ -489,6 +497,7 @@ Step 2: Delete Jenkins
 helm uninstall jenkins --namespace jenkins
 helm uninstall monitoring -n monitoring
 kubectl delete namespace jenkins
+kubectl delete namespace monitoring
 ```
 
 ⚠️ Pre-Requisites Before Running terraform destroy
