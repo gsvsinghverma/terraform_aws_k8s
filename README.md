@@ -156,7 +156,31 @@ unzip awscliv2.zip
 sudo ./aws/install
 aws --version
 ```
-# 3. Terraform Install
+# 3. Docker Install
+```bash
+sudo apt install docker.io -y
+sudo usermod -aG docker ubuntu
+newgrp docker
+```
+# 4. Git Install
+```bash
+sudo apt install git -y
+```
+
+# 5. kubectl Install
+```bash
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin
+kubectl version --short --client
+```
+# 6. eksctl Install
+```bash
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+```
+# 7. Terraform Install
 ```bash
 sudo apt install -y gnupg software-properties-common
 wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -164,33 +188,13 @@ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://
 sudo apt update && sudo apt install terraform -y
 terraform --version
 ```
-# 4. kubectl Install
-```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-kubectl version --client
-```
-# 5. Helm Install
+# 8. Helm Install
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 helm version
 ```
-# 6. Docker Install
-```bash
-sudo apt install docker.io -y
-sudo usermod -aG docker ubuntu
-newgrp docker
-```
-# 7. Git Install
-```bash
-sudo apt install git -y
-```
-# 8. eksctl Install
-```bash
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-eksctl version
-```
+
+
 
 ### 2️⃣ PHASE : Clone Run Commands
 ```bash
