@@ -120,6 +120,13 @@ Step 2: Permissions add
 → Checkbox  ✅
 → Next
 
+> ⚠️ **Security Note:** `AdministratorAccess` sirf learning/testing 
+> ke liye theek hai. Production mein inhe use karo:
+> - `AmazonEKSClusterPolicy`
+> - `AmazonEC2ContainerRegistryFullAccess`  
+> - `AmazonRDSFullAccess`
+> - `AmazonS3FullAccess`
+
 Step 3: Role name
 → Role name: jump-server-role
 → Create Role ✅
