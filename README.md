@@ -156,7 +156,7 @@ aws sts get-caller-identity
 if you get this output means all are ok ✅
 
 ```bash
-json{
+{
     "UserId": "AROA...",
     "Account": "123456789012",
     "Arn": "arn:aws:sts::123456789012:assumed-role/jump-server-role/i-..."
@@ -374,6 +374,24 @@ kubectl patch svc argocd-server -n argocd \
 kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d
 ```
+### 7️⃣ PHASE : Monitoring Setup (Prometheus + Grafana)
+
+# Monitoring namespace
+kubectl create namespace monitoring
+
+# Helm repo add
+helm repo add prometheus-community \
+  https://prometheus-community.github.io/helm-charts
+helm repo update
+
+# Install Prometheus + Grafana (kube-prometheus-stack)
+helm install monitoring prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --set grafana.service.type=LoadBalancer
+
+# Grafana password
+kubectl --namespace monitoring get secret monitoring-grafana \
+  -o jsonpath="{.data.admin-password}" | base64 -d
 
 
   
@@ -615,3 +633,14 @@ After deployment:
 
 ---
 
+## 🛠️ Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| `terraform init` fails | Check AWS credentials: `aws sts get-caller-identity` |
+| EKS nodes not joining | Check Security Group rules for port 443 |
+| RDS connection refused | Check Private Subnet routing & SG rules |
+| ArgoCD not syncing | Check GitHub repo access & webhook |
+| ECR push denied | Re-run ECR login command |
+| Pods in Pending state | Check node capacity: `kubectl describe pod <name>` |
+| `terraform destroy` fails | Disable RDS deletion protection first (already mentioned ✅) |
