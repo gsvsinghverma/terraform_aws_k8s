@@ -58,6 +58,22 @@ Mumbai Region (ap-south-1)
 | ArgoCD         | GitOps Deployment          |
 
 ---
+
+## ✅ Prerequisites (Before You Start)
+
+| Requirement | Details |
+|-------------|---------|
+| AWS Account | With billing enabled |
+| AWS Budget Alert | Set $50 alert to avoid surprise bills |
+| Domain Name | For Route53 (optional) |
+| GitHub Account | For CI/CD pipeline |
+| Local Machine OS | Linux/Mac/Windows (WSL2) |
+
+> ⚠️ **Cost Warning:** EKS (~$70/month) + RDS Aurora (~$50/month) 
+> + NAT Gateway (~$30/month) = ~$150-200/month minimum.
+> if you are using for  learning perpose so please run this command  `terraform destroy` !
+
+---
 Note :- please change the details in terraform.tfvars according to your project_name
 
 
@@ -169,7 +185,7 @@ sudo apt install git -y
 
 # 5. kubectl Install
 ```bash
-curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin
 kubectl version --short --client
