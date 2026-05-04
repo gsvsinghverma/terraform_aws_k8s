@@ -487,6 +487,7 @@ Step 2: Delete Jenkins
 
 ```bash
 helm uninstall jenkins --namespace jenkins
+helm uninstall monitoring -n monitoring
 kubectl delete namespace jenkins
 ```
 
