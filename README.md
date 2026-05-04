@@ -195,7 +195,7 @@ sudo apt install git -y
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin
-kubectl version --short --client
+kubectl version --client
 ```
 # 6. eksctl Install
 ```bash
@@ -632,7 +632,6 @@ After deployment:
 
 ## ⭐ Future Improvements
 
-* Add Monitoring (Prometheus + Grafana)
 * Add Logging (ELK Stack / CloudWatch)
 * Add Multi-region DR setup
 * Add Auto Scaling policies
