@@ -192,20 +192,23 @@ sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 ```
 
-### 2️⃣ PHASE : Jump Server Setup
+### 2️⃣ PHASE : Create Folder On Jump Server For git clone 
 
 
-Create folder structure on Jump Server:
+Create folder on Jump Server:
 
 
 ```bash
 mkdir -p ~/infrastructure
 cd ~/infrastructure
 ```
-# Folder structure
+
+
+### 3️⃣  PHASE : Clone Run Commands
 ```bash
-mkdir -p {vpc,eks,rds,s3,ecr,security-groups,iam,secrets-manager,cloudwatch,jump-server}
-touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
+git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
+cd terraform_aws_k8s
+cd infrastructure
 ```
 ## 📁 Project Structure
 ---
@@ -252,12 +255,6 @@ touch main.tf variables.tf outputs.tf terraform.tfvars providers.tf
     ├── main.tf
     ├── variables.tf
     └── outputs.tf
-```
-### 3️⃣  PHASE : Clone Run Commands
-```bash
-git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
-cd terraform_aws_k8s
-cd infrastructure
 ```
 
 
