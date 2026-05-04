@@ -643,10 +643,10 @@ After deployment:
 
 | Problem | Solution |
 |---------|----------|
-| `terraform init` fails | Check AWS credentials: `aws sts get-caller-identity` |
-| EKS nodes not joining | Check Security Group rules for port 443 |
-| RDS connection refused | Check Private Subnet routing & SG rules |
-| ArgoCD not syncing | Check GitHub repo access & webhook |
-| ECR push denied | Re-run ECR login command |
-| Pods in Pending state | Check node capacity: `kubectl describe pod <name>` |
-| `terraform destroy` fails | Disable RDS deletion protection first (already mentioned ✅) |
+| `terraform init` fails | Check AWS credentials: `aws sts get-caller-identity`         |
+| EKS nodes not joining  | Check Security Group rules for port 443                      |
+| RDS connection refused | Check Private Subnet routing & SG rules                      |
+| ArgoCD not syncing     | Check GitHub repo access & webhook                           |
+| ECR push denied        | Re-run ECR login command                                     |
+| Pods in Pending state  | Check node capacity: `kubectl describe pod <name>`           |
+| terraform destroy`fails| Disable RDS deletion protection first (already mentioned ✅) |
