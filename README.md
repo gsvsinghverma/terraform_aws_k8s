@@ -192,19 +192,7 @@ sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 ```
 
-### 2️⃣ PHASE : Create Folder On Jump Server For git clone 
-
-
-Create folder on Jump Server:
-
-
-```bash
-mkdir -p ~/infrastructure
-cd ~/infrastructure
-```
-
-
-### 3️⃣  PHASE : Clone Run Commands
+### 2️⃣ PHASE : Clone Run Commands
 ```bash
 git clone https://github.com/gsvsinghverma/terraform_aws_k8s.git
 cd terraform_aws_k8s
@@ -259,7 +247,7 @@ cd infrastructure
 
 
 ---
-### 4️⃣   PHASE : Terraform Run Commands
+### 3️⃣  PHASE : Terraform Run Commands
 ```bash
 cd ~/infrastructure
 ```
@@ -283,7 +271,7 @@ terraform apply tfplan
 ```bash
 terraform output
 ```
-### 5️⃣ PHASE : EKS Connect by Jump Server
+### 4️⃣   PHASE :  EKS Connect by Jump Server
 
 # Kubeconfig update
 ```bash
@@ -294,7 +282,7 @@ aws eks update-kubeconfig --region ap-south-1 --name myapp-cluster
 kubectl get nodes
 kubectl get pods -A
 ```
-### 6️⃣  PHASE : Docker Image Build & ECR Push
+### 5️⃣ PHASE : Docker Image Build & ECR Push
 
 
 # ECR login
@@ -316,7 +304,7 @@ docker tag myapp-app:latest \
 ```bash
 docker push <account-id>.dkr.ecr.ap-south-1.amazonaws.com/myapp-app:latest
 ```
- ### 7️⃣  PHASE : Jenkins + ArgoCD Setup
+### 6️⃣  PHASE : Jenkins + ArgoCD Setup
 
 
 Jenkins Install (EKS)
